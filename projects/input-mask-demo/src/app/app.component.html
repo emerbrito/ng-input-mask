@@ -1,0 +1,45 @@
+<h1>
+  Input Mask Directive
+</h1>
+
+<p>
+  Use pre-defined mask literals to define a mask.
+  Any character not recognized as a mask literal will be added as a constant.  
+</p>
+
+<p>
+  Mask literals:
+</p>
+
+<ul>
+  <li>A - Place holder for any alpha character</li>
+  <li>9 - Place holder for any numeric character</li>
+  <li>* - Place holder for any alpha numeric character</li>
+</ul>  
+
+<div class="controls-container">
+
+    <mat-form-field floatLabel="always" class="control-full-width">
+      <mat-label>Phone Number</mat-label>
+      <input matInput inputMask [mask]="phoneMask" (format)="valueFormatted($event)" [placeholder]="phoneMask">
+      <mat-hint>Number will be formatted as: {{phoneMask}}</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field floatLabel="always" class="control-full-width">
+      <mat-label>Date Mask</mat-label>
+      <input matInput inputMask [mask]="dateMask">
+      <mat-hint>Enter date as mm/dd/yyyy</mat-hint>
+    </mat-form-field>
+    
+    <mat-form-field floatLabel="always" class="control-full-width">
+      <mat-label>Credit Card Number</mat-label>
+      <input matInput inputMask [mask]="ccMask" [placeholder]="ccMask">
+    </mat-form-field> 
+    
+    <mat-form-field floatLabel="always" class="control-full-width">
+      <mat-label>Constant Prefix</mat-label>
+      <input matInput inputMask [mask]="invoiceMask" [placeholder]="invoiceMask">
+      <mat-hint>Enter ivoice number: {{invoiceMask}}</mat-hint>
+    </mat-form-field>
+    
+</div>

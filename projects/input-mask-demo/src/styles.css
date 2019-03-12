@@ -1,0 +1,23 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { 
+    height: 100%; 
+}
+
+body { 
+    margin: 0; 
+    padding: 30px;
+    font-family: Roboto, "Helvetica Neue", sans-serif; 
+}
+
+.controls-container {
+    max-width: 400px;
+}
+
+.control-full-width {
+    width: 100%;
+}
+
+.control-full-width:not(:first-of-type) {
+    margin-top: 15px;
+}

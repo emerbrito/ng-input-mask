@@ -1,0 +1,28 @@
+{
+  "name": "input-mask",
+  "version": "0.0.1",
+  "description": "An Angular directive to apply masks to into a text input.",
+  "author": {
+    "name": "Emerson Brito"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/emerbrito/ng-input-mask.git"
+  },
+  "bugs": {
+    "url": "https://github.com/emerbrito/ng-input-mask/issues"
+  },
+  "homepage": "https://github.com/emerbrito/ng-input-mask",
+  "keywords": [
+    "angular",
+    "directive",
+    "input",
+    "mask",
+    "masking"
+  ],
+  "license": "MIT",
+  "peerDependencies": {
+    "@angular/common": "^7.2.0",
+    "@angular/core": "^7.2.0"
+  }
+}
