@@ -1,5 +1,5 @@
 {
-  "name": "input-mask",
+  "name": "@emerbrito/input-mask",
   "version": "0.0.1",
   "description": "An Angular directive to apply masks to into a text input.",
   "author": {
