@@ -10,7 +10,7 @@ import {
     LettersOrSpacesRule, 
     DigitSpaceOrSignRule, 
     CharacterRule, 
-    RegExpRuleBase} from './format-rules';
+    RegExpRuleBase} from './mask-rules';
 
 class GreaterLessThanRule extends RegExpRuleBase {
     constructor() {

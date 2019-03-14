@@ -1,4 +1,14 @@
-import { DigitRule, DigitOrSpaceRule, DigitSpaceOrSignRule, LettersRule, LettersOrSpacesRule, CharacterRule, CharacterOrSpaceRule, AlphanumericRule, AlphanumericOrSpaceRule, LiteralRule } from './format-rules';
+import { 
+    DigitRule, 
+    DigitOrSpaceRule, 
+    DigitSpaceOrSignRule, 
+    LettersRule, 
+    LettersOrSpacesRule, 
+    CharacterRule, 
+    CharacterOrSpaceRule, 
+    AlphanumericRule, 
+    AlphanumericOrSpaceRule, 
+    LiteralRule } from './mask-rules';
 
 describe('Format Rules', () => {
 
