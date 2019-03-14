@@ -12,7 +12,7 @@ import {
     CharacterRule, 
     RegExpRuleBase} from './format-rules';
 
-export class FormatUtility{
+export class MaskHelper{
 
     private _rules: RuleBase[] = [];
     private _mask: string;
@@ -26,6 +26,7 @@ export class FormatUtility{
     private _allpatterns: string;
     private _customTests: RuleBase[];
     private _allregexp: RegExp;
+    private _lsufix: string;
 
     /**
      * A string containing the unformatted value.
@@ -49,12 +50,26 @@ export class FormatUtility{
     }
 
     /**
+     * Whether the formatted string should and with a literal.
+     */
+    get hasLiteralSufix(): boolean {
+        return this.literalSufix.length > 0;
+    }    
+
+    /**
      * Whether current value is invalid.
      */
     get invalid(): boolean {
         return !this.valid;
     }    
 
+    /**
+     * The literals expected to be at the end of the formatted string, if any.
+     */
+    get literalSufix(): string {
+        return this._lsufix;
+    }
+  
     /**
      * Current mask.
      */
@@ -98,6 +113,26 @@ export class FormatUtility{
         this._mask = mask;
         this._customRules = rules;
         this.parse(mask);
+    }
+
+    /**
+     * Whether a literal is expected at the specified mask (zero based) index.
+     */
+    literalAt(index: number): boolean {
+
+        let rule: RuleBase;
+        let value: boolean = false;
+
+        if(!this.rules && this.rules.length === 0) {
+            return value;
+        }
+
+        rule = this.rules[index];
+        if(rule && rule.literal) {
+            value = true;
+        }
+        
+        return value;
     }
 
     /**
@@ -310,6 +345,8 @@ export class FormatUtility{
         if(this._allpatterns.length > 0) {
             this._allregexp = new RegExp(this._allpatterns);
         }
+
+        this.setLiteralsufix();
     }    
     
     private nextRule(): RuleBase {
@@ -318,6 +355,33 @@ export class FormatUtility{
         this._nextIndex++;
 
         return rule;
+    }
+
+    private setLiteralsufix(): void {
+
+        let mindex: number;
+        let rule: RuleBase;
+        let literals: string[] = [];
+
+        if(this.rules && this.rules.length > 0 && this.rules[this.rules.length-1].literal === false) {
+            this._lsufix = '';
+            return;
+        }
+
+        mindex = this.rules.length - 1;
+
+        for(let i=mindex; i >= 0; i--) {
+
+            rule = this.rules[i];
+            if(rule.literal) {
+                literals.push(rule.specifier);
+            }
+            else {
+                break;
+            }
+        }
+
+        this._lsufix = literals.reverse().join('');
     }
 
     private resetRules(): void {

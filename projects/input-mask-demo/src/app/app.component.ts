@@ -14,7 +14,7 @@ export class AppComponent implements OnInit {
   phoneMask: string = '(999) 999-9999'
   einMask: string = '99-9999999';
   ccMask: string = '9999 9999 9999 9999';
-  invoiceMask: string = "INV9999";
+  invoiceMask: string = "INV-9999 S";
 
   constructor(private fb: FormBuilder) {}
 
@@ -31,5 +31,4 @@ export class AppComponent implements OnInit {
     console.log('Formatted value: ', event.value);
     console.log('Clean value: ', event.cleanValue);
   }
-
 }

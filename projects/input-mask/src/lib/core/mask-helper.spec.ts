@@ -1,4 +1,4 @@
-import { FormatUtility } from "./format-utility";
+import { MaskHelper } from "./mask-helper";
 import { 
     LiteralRule, 
     AlphanumericRule, 
@@ -21,57 +21,57 @@ class GreaterLessThanRule extends RegExpRuleBase {
 describe('Format Rules', () => {
 
     it('StringFormat: create instance of AlphanumericRule', () => {
-        let util = new FormatUtility('A');        
+        let util = new MaskHelper('A');        
         expect(util.rules[0]).toEqual(jasmine.any(AlphanumericRule))     
     });  
     
     it('StringFormat: create instance of AlphanumericOrSpaceRule', () => {
-        let util = new FormatUtility('a');        
+        let util = new MaskHelper('a');        
         expect(util.rules[0]).toEqual(jasmine.any(AlphanumericOrSpaceRule))     
     });      
 
     it('StringFormat: create instance of CharacterOrSpaceRule', () => {
-        let util = new FormatUtility('C');        
+        let util = new MaskHelper('C');        
         expect(util.rules[0]).toEqual(jasmine.any(CharacterOrSpaceRule))     
     });  
     
     it('StringFormat: create instance of LettersRule', () => {
-        let util = new FormatUtility('L');        
+        let util = new MaskHelper('L');        
         expect(util.rules[0]).toEqual(jasmine.any(LettersRule))     
     });  
     
     it('StringFormat: create instance of DigitOrSpaceRule', () => {
-        let util = new FormatUtility('0');        
+        let util = new MaskHelper('0');        
         expect(util.rules[0]).toEqual(jasmine.any(DigitOrSpaceRule))     
     }); 
     
     it('StringFormat: create instance of DigitRule', () => {
-        let util = new FormatUtility('9');        
+        let util = new MaskHelper('9');        
         expect(util.rules[0]).toEqual(jasmine.any(DigitRule))     
     }); 
     
     it('StringFormat: create instance of LettersOrSpacesRule', () => {
-        let util = new FormatUtility('?');        
+        let util = new MaskHelper('?');        
         expect(util.rules[0]).toEqual(jasmine.any(LettersOrSpacesRule))     
     }); 
     
     it('StringFormat: create instance of DigitSpaceOrSignRule', () => {
-        let util = new FormatUtility('#');        
+        let util = new MaskHelper('#');        
         expect(util.rules[0]).toEqual(jasmine.any(DigitSpaceOrSignRule))     
     }); 
     
     it('StringFormat: create instance of CharacterRule', () => {
-        let util = new FormatUtility('&');        
+        let util = new MaskHelper('&');        
         expect(util.rules[0]).toEqual(jasmine.any(CharacterRule))     
     }); 
     
     it('StringFormat: create instance of LiteralRule', () => {
-        let util = new FormatUtility('-');        
+        let util = new MaskHelper('-');        
         expect(util.rules[0]).toEqual(jasmine.any(LiteralRule))     
     }); 
     
     it('StringFormat: create mask with literal', () => {
-        let util = new FormatUtility('99-9');        
+        let util = new MaskHelper('99-9');        
         expect(util.rules[0]).toEqual(jasmine.any(DigitRule))
         expect(util.rules[1]).toEqual(jasmine.any(DigitRule))
         expect(util.rules[2]).toEqual(jasmine.any(LiteralRule))
@@ -79,7 +79,7 @@ describe('Format Rules', () => {
     });
 
     it('StringFormat: create mask with scaped charater', () => {
-        let util = new FormatUtility('A|A99');       
+        let util = new MaskHelper('A|A99');       
         expect(util.rules[0]).toEqual(jasmine.any(AlphanumericRule))
         expect(util.rules[1]).toEqual(jasmine.any(LiteralRule))
         expect(util.rules[2]).toEqual(jasmine.any(DigitRule))
@@ -87,26 +87,26 @@ describe('Format Rules', () => {
     }); 
     
     it('StringFormat: should generate placeholder', () => {
-        let util = new FormatUtility('|A-&99X');       
+        let util = new MaskHelper('|A-&99X');       
         expect(util.placeHolder).toEqual('A-___X');
     });
 
     it('StringFormat: should pass validation without a mask.', () => {
-        let util = new FormatUtility(null);
+        let util = new MaskHelper(null);
 
         expect(util.set('abc')).toEqual(true);
         expect(util.formattedValue).toEqual('abc');
     });
     
     it('StringFormat: should not pass validation with empty target.', () => {
-        let util = new FormatUtility('999');
+        let util = new MaskHelper('999');
 
         expect(util.set(null)).toEqual(false);
         expect(util.formattedValue).toEqual('');
     });
               
     it('StringFormat: (apply) start with literal', () => {
-        let util = new FormatUtility('|A-L99');
+        let util = new MaskHelper('|A-L99');
 
         expect(util.set('*')).toEqual(false);
         expect(util.formattedValue).toEqual('');
@@ -123,7 +123,7 @@ describe('Format Rules', () => {
     });
 
     it('StringFormat: (apply) end with literal', () => {
-        let util = new FormatUtility('9-L99Z');
+        let util = new MaskHelper('9-L99Z');
 
         expect(util.set('*')).toEqual(false);
         expect(util.formattedValue).toEqual('');
@@ -142,7 +142,7 @@ describe('Format Rules', () => {
     });    
     
     it('StringFormat: (apply) start and end with literals', () => {
-        let util = new FormatUtility('|A-L99X');
+        let util = new MaskHelper('|A-L99X');
 
         expect(util.set('*')).toEqual(false);
         expect(util.formattedValue).toEqual('');
@@ -159,7 +159,7 @@ describe('Format Rules', () => {
     });   
     
     it('StringFormat: (apply) start and end with non literals', () => {
-        let util = new FormatUtility('9-99');
+        let util = new MaskHelper('9-99');
 
         expect(util.set('*')).toEqual(false);
         expect(util.formattedValue).toEqual('');
@@ -180,7 +180,7 @@ describe('Format Rules', () => {
     it('StringFormat: (apply) custom rule', () => {
 
         let customRules = [ new GreaterLessThanRule() ]
-        let util = new FormatUtility('|!9-9!9', customRules);
+        let util = new MaskHelper('|!9-9!9', customRules);
 
         expect(util.set('*')).toEqual(false);
         expect(util.formattedValue).toEqual('');
@@ -201,7 +201,7 @@ describe('Format Rules', () => {
     }); 
     
     it('validChar: should determine if charater is valid for mask.', () => {
-        let util = new FormatUtility('!A-999A?');
+        let util = new MaskHelper('!A-999A?');
 
         expect(util.validChar('0')).toEqual(true);
         expect(util.validChar('C')).toEqual(true);
