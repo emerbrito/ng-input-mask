@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
-import { MaskEvent } from 'projects/input-mask/src/lib/models';
+import { MaskEvent } from 'projects/input-mask/src/lib/common-models';
 
 @Component({
   selector: 'app-root',

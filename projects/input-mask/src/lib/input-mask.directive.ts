@@ -1,9 +1,8 @@
 import { Directive, Input, ElementRef, OnInit, OnChanges, SimpleChanges, SimpleChange, HostListener, Self, Optional, Output, EventEmitter } from '@angular/core';
 
 import { NgControl } from '@angular/forms';
-import { MaskEvent, INPUTMASK_PARSE_ERROR } from './models';
+import { MaskEvent, RuleBase, INPUTMASK_PARSE_ERROR } from './common-models';
 import { MaskHelper } from './core/mask-helper';
-import { RuleBase } from './core/mask-rules';
 
 @Directive({
   selector: '[inputMask]'

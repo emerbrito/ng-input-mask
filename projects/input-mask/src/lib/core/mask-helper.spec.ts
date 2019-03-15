@@ -1,3 +1,4 @@
+import { RegExpRuleBase } from '../common-models';
 import { MaskHelper } from "./mask-helper";
 import { 
     LiteralRule, 
@@ -9,8 +10,7 @@ import {
     DigitRule, 
     LettersOrSpacesRule, 
     DigitSpaceOrSignRule, 
-    CharacterRule, 
-    RegExpRuleBase} from './mask-rules';
+    CharacterRule} from './mask-rules';
 
 class GreaterLessThanRule extends RegExpRuleBase {
     constructor() {

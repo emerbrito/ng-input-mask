@@ -1,5 +1,5 @@
+import { RuleBase, RegExpRuleBase } from '../common-models';
 import { 
-    RuleBase, 
     LiteralRule, 
     AlphanumericRule, 
     AlphanumericOrSpaceRule, 
@@ -9,8 +9,7 @@ import {
     DigitRule, 
     LettersOrSpacesRule, 
     DigitSpaceOrSignRule, 
-    CharacterRule, 
-    RegExpRuleBase} from './mask-rules';
+    CharacterRule} from './mask-rules';
 
 export class MaskHelper{
 
