@@ -1,28 +1,13 @@
 <h1>
-  Input Mask Directive
+  Input Mask Directive Examples
 </h1>
-
-<p>
-  Use pre-defined mask literals to define a mask.
-  Any character not recognized as a mask literal will be added as a constant.  
-</p>
-
-<p>
-  Mask literals:
-</p>
-
-<ul>
-  <li>A - Place holder for any alpha character</li>
-  <li>9 - Place holder for any numeric character</li>
-  <li>* - Place holder for any alpha numeric character</li>
-</ul>  
 
 <div class="controls-container">
 
     <mat-form-field floatLabel="always" class="control-full-width">
       <mat-label>Phone Number</mat-label>
       <input matInput inputMask [mask]="phoneMask" (format)="valueFormatted($event)" [placeholder]="phoneMask">
-      <mat-hint>Number will be formatted as: {{phoneMask}}</mat-hint>
+      <mat-hint>Phone number will be formatted as: {{phoneMask}}</mat-hint>
     </mat-form-field>
 
     <mat-form-field floatLabel="always" class="control-full-width">
@@ -55,7 +40,8 @@
     <mat-form-field floatLabel="always" class="control-full-width">
       <mat-label>Phone Number</mat-label>
       <input matInput formControlName="phoneNumber" inputMask [mask]="phoneMask" [placeholder]="phoneMask">
-      <mat-hint>Number will be formatted as: {{phoneMask}}</mat-hint>
+      <mat-hint>Phone number will be formatted as: {{phoneMask}}</mat-hint>
+      <mat-error *ngIf="form.get('phoneNumber').invalid">Invalid phone number</mat-error>
     </mat-form-field>    
 
   </form>
