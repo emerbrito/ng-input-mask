@@ -3,7 +3,7 @@ import { Directive, Input, ElementRef, OnInit, OnChanges, SimpleChanges, SimpleC
 import { NgControl } from '@angular/forms';
 import { MaskEvent, INPUTMASK_PARSE_ERROR } from './models';
 import { MaskHelper } from './core/mask-helper';
-import { eraseStyles } from '@angular/animations/browser/src/util';
+import { RuleBase } from './core/mask-rules';
 
 @Directive({
   selector: '[inputMask]'
@@ -13,6 +13,7 @@ export class InputMaskDirective implements OnInit, OnChanges {
   @Input() mask: string;
   @Input() value: string;
   @Input() validateMask: boolean = true;
+  @Input() rules: RuleBase[];
   @Output() format: EventEmitter<MaskEvent> = new EventEmitter<MaskEvent>();
 
   command: boolean;
@@ -25,11 +26,7 @@ export class InputMaskDirective implements OnInit, OnChanges {
     @Optional() @Self() private ngControl: NgControl
   ) { }
 
-  ngOnInit() {
-    
-    if(this.value){
-      this.apply(this.value);
-    }
+  ngOnInit() {    
   }
 
   ngAfterContentChecked() {
@@ -41,10 +38,9 @@ export class InputMaskDirective implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
 
     let maskValue: string = changes.mask ? changes.mask.currentValue : null;
-    let valueChange: SimpleChange = changes.value;
 
     if(maskValue) {
-      this.util = new MaskHelper(maskValue);
+      this.util = new MaskHelper(maskValue, this.rules);
     }
   } 
   
