@@ -1,4 +1,4 @@
-import { Directive, Input, ElementRef, OnChanges, SimpleChanges, SimpleChange, HostListener, Self, Optional, Output, EventEmitter } from '@angular/core';
+import { Directive, Input, ElementRef, OnInit, OnChanges, SimpleChanges, SimpleChange, HostListener, Self, Optional, Output, EventEmitter } from '@angular/core';
 
 import { NgControl } from '@angular/forms';
 import { MaskEvent, INPUTMASK_PARSE_ERROR } from './models';
@@ -8,7 +8,7 @@ import { eraseStyles } from '@angular/animations/browser/src/util';
 @Directive({
   selector: '[inputMask]'
 })
-export class InputMaskDirective implements OnChanges {
+export class InputMaskDirective implements OnInit, OnChanges {
 
   @Input() mask: string;
   @Input() value: string;
@@ -25,6 +25,19 @@ export class InputMaskDirective implements OnChanges {
     @Optional() @Self() private ngControl: NgControl
   ) { }
 
+  ngOnInit() {
+    
+    if(this.value){
+      this.apply(this.value);
+    }
+  }
+
+  ngAfterContentChecked() {
+    if(this.getValue()) {
+      this.apply(this.getValue());
+    }
+  }
+
   ngOnChanges(changes: SimpleChanges) {
 
     let maskValue: string = changes.mask ? changes.mask.currentValue : null;
@@ -32,10 +45,6 @@ export class InputMaskDirective implements OnChanges {
 
     if(maskValue) {
       this.util = new MaskHelper(maskValue);
-    }
-
-    if(valueChange && valueChange.firstChange) {
-      this.apply(valueChange.currentValue);
     }
   } 
   
