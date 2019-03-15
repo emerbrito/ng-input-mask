@@ -1,49 +1,66 @@
-# Angular InputMask Directive
+# InputMask Angular Directive
+A mask directive with support for custom rules and Angular forms.  
+Provides advanced masking capabilities while working well with (and mostly transparent to) context menu and keyboard operations such as copy and paste.
 
-This directive enables a controlled text input based on a specific format.
+Basic usage:
+````html
+<input inputMask mask="999-99-9999">
+````
 
-The format is defined by a mask containing a set of rules.
-The rules are placeholders for a specific set of cahracters, anything that is not a known rule will be applied as a constant at the specigied position.
+## Rules
+The following are the predefined mask rules:
 
-### Rules
+ Rule | Description 
+:----:|:------------
+ 9 | Accepts any digit between 0 and 9.
+ 0 | Accepts any digit between 0 and 9 or space.
+ \# | Same as rule 9. Also allows + (plus) and - (minus) signs.
+ L | Accepts any letters (a-z and A-Z).
+ ? | Accepts any letter (a-z and A-Z) or space.
+ & | Accepts any character except a space. Equivalent to \S in regular expressions.
+ C | Accepts any character. Equivalent to . in regular expressions.
+ A | Alphanumeric. Accepts letters and digits only.
+ a | Alphanumeric or space. Accepts letters, digits and space.
 
-| Rule | Description
-|:----:|------------
-| 9    | Accepts any digit between 0 and 9.
-| L    | Restricts the input to a-z and A-Z letters. Equivalent to [a-zA-Z] in regular expressions
-| A    | Alphanumeric. Accepts letters and digits only.
+### Escaping Rules
+Use the character `|` (pipe) to escape any of the mask rules and use them as literals.
 
-### Masking
+## Using InputMask
+Start by importing the `InputMaskModule`:
 
-Sample of a social security mask:
+````javascript
+import { InputMaskModule } from '@emerbrito/input-mask';
+````
 
-    999-99-9999
+Then apply the directive to an input element and set the mask property:
 
-What to expect as the user types:
+````html
+<input inputMask mask="999-99-9999">
+````
 
-| User Input | Field Value
-|------------|---
-| 123        | 123
-| 1234       | 123-4
-| 12345678   | 123-45-678
+### Getting Unformatted Value
+As expected the mask will change the input value as it is entered.  
+To access the unformatted value (among with additional info) listen to the directive's `format` event:
 
-## Usage
+````html
+<input inputMask mask="999-99-9999" (format)="onFormat($event)">
+````
 
-To use the InputMask directive import the module:
+````javascript
+onFormat(event: MaskEvent) {
+    console.log('Formatted value: ', event.value);
+    console.log('Clean value: ', event.cleanValue);
+}
+````
 
-    import { InputMaskModule } from '@emerbrito/input-mask';
+## Angular Forms
+By default, when used inside an Angular form the directive will interact with `FormControl` setting its invalid state based on whether or not the input satisfies the mask.
 
-Basica usage:
+To prevent the mask validation from propagating to the form control (if you is being used) set the `validateMask` property to `false`.
 
-    <input inputMask mask="999-99-9999">
+````html
+<input inputMask mask="999-99-9999" validateMask="false">
+````
 
-Tap into the format event to get additional information including the **unformatted** value.
-
-    <input inputMask mask="999-99-9999" (format)="valueFormatted($event)">
-
-In your component:
-
-    valueFormatted(event: MaskEvent) {
-        console.log('Formatted value: ', event.value);
-        console.log('Clean value: ', event.cleanValue);
-    }
+### Custom Rules
+For a use case not covered by the built in rules, new custom rules can be created and registered with the directive. See [wiki](https://github.com/emerbrito/ng-input-mask/wiki) form more details.
