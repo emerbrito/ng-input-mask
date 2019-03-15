@@ -10,7 +10,7 @@ import {
     AlphanumericOrSpaceRule, 
     LiteralRule } from './mask-rules';
 
-describe('Format Rules', () => {
+describe('Mask Rules', () => {
 
     it('DigitRule: should accept digit', () => {
         const rule = new DigitRule;    

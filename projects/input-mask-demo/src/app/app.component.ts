@@ -24,7 +24,6 @@ export class AppComponent implements OnInit {
       phoneNumber: new FormControl(null, Validators.required)
     });
 
-    this.form.valueChanges.subscribe(data => console.log(data));
   }
 
   valueFormatted(event: MaskEvent) {

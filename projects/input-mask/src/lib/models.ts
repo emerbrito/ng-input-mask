@@ -1,3 +1,5 @@
+export const INPUTMASK_PARSE_ERROR: string = 'inputMaskParse';
+
 export interface MaskEvent {
     mask: string,
     placeHolder: string,

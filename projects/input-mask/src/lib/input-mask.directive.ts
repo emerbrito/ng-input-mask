@@ -1,8 +1,9 @@
 import { Directive, Input, ElementRef, OnChanges, SimpleChanges, SimpleChange, HostListener, Self, Optional, Output, EventEmitter } from '@angular/core';
 
 import { NgControl } from '@angular/forms';
-import { MaskEvent } from './models';
+import { MaskEvent, INPUTMASK_PARSE_ERROR } from './models';
 import { MaskHelper } from './core/mask-helper';
+import { eraseStyles } from '@angular/animations/browser/src/util';
 
 @Directive({
   selector: '[inputMask]'
@@ -10,7 +11,8 @@ import { MaskHelper } from './core/mask-helper';
 export class InputMaskDirective implements OnChanges {
 
   @Input() mask: string;
-  @Input() value: string;  
+  @Input() value: string;
+  @Input() validateMask: boolean = true;
   @Output() format: EventEmitter<MaskEvent> = new EventEmitter<MaskEvent>();
 
   command: boolean;
@@ -108,13 +110,15 @@ export class InputMaskDirective implements OnChanges {
   private apply(value: string): void {
     
     this.util.set(value.toString())
-    this.setValue(this.util.formattedValue);   
+    this.setValue(this.util.formattedValue);       
     this.format.emit({
       mask: this.mask,
       placeHolder: this.util.placeHolder,
       value: this.util.formattedValue,
       cleanValue: this.util.cleanValue
     });
+    this.updateFormControl();
+
   }
 
   private clearFlags(): void {
@@ -150,4 +154,30 @@ export class InputMaskDirective implements OnChanges {
   private setValue(value: string): void {
     this.el.nativeElement.value = value;
   }    
+
+  private updateFormControl(): void {
+
+    if(!this.validateMask || !this.ngControl || !this.ngControl.control) {
+      return;
+    }
+
+    let errors = this.ngControl.errors;
+      
+    if(this.util.valid) {        
+      if(errors && errors[INPUTMASK_PARSE_ERROR]) {
+        delete errors[INPUTMASK_PARSE_ERROR];
+      }
+    }
+    else {
+
+      if(!errors) {
+        errors = {};
+      }        
+      errors[INPUTMASK_PARSE_ERROR] = true;
+    }
+
+    if(errors && errors[INPUTMASK_PARSE_ERROR] && errors[INPUTMASK_PARSE_ERROR] === true) {
+      this.ngControl.control.setErrors(errors);
+    }
+  }
 }

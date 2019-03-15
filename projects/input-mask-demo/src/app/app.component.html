@@ -43,3 +43,21 @@
     </mat-form-field>
     
 </div>
+
+<h3>Interacting with Forms</h3>
+
+<p>When used inside a form directive has the option to trigger FormControl validation.</p>
+
+<div class="controls-container">
+
+  <form [formGroup]="form">
+
+    <mat-form-field floatLabel="always" class="control-full-width">
+      <mat-label>Phone Number</mat-label>
+      <input matInput formControlName="phoneNumber" inputMask [mask]="phoneMask" [placeholder]="phoneMask">
+      <mat-hint>Number will be formatted as: {{phoneMask}}</mat-hint>
+    </mat-form-field>    
+
+  </form>
+
+</div>
